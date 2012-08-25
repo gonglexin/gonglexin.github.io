@@ -1,0 +1,13 @@
+/* page header */
+header > ul{
+  padding-left: 0;
+}
+
+header > ul > li{
+  display: inline-block;
+}
+
+/* article */
+article{
+  margin-bottom: 2em;
+}

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 ---
 
 # 幸福我们来创造

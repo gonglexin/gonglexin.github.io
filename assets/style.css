@@ -1,3 +1,11 @@
+/* base */
+a {
+  color: gray;
+}
+a:hover {
+  color: black;
+}
+
 /* page header */
 header > ul{
   padding-left: 0;

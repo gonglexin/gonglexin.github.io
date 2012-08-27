@@ -1,7 +1,9 @@
+/* Base */
 body {
   position: relative;
   padding-top: 40px;
 }
+
 a {
   color: #555;
 }
@@ -10,12 +12,12 @@ a:hover {
   color: black;
 }
 
-/* Archives */
+/* Archives & About page */
 article {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
-section {
+#archives, #about, #works {
   margin-top: 30px;
 }
 

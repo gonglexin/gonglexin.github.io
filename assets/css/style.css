@@ -12,12 +12,12 @@ a:hover {
   color: black;
 }
 
-/* Archives & About page */
+/* Archive & About page */
 article {
   margin-top: 20px;
 }
 
-#archives, #about, #works {
+#archive, #about, #works {
   margin-top: 30px;
 }
 

@@ -7,12 +7,11 @@ layout: default
     <header>
       <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
     </header>
-    <time class="label">{{ post.date | date_to_string }}</time>
+    <time>{{ post.date | date: "%Y-%m-%d" }}</time>
     <section>
       {{ post.content }}      
     </section>
   </article>
 {% endfor %}
 
-<hr>
-<a href="/archive.html" class="muted">See more posts</a>
+<a href="/archive.html">See more posts</a>

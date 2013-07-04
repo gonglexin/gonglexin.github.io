@@ -4,10 +4,10 @@ title: Archive
 ---
 
 <section id="archive">
-  <ul class="unstyled">
+  <ul>
     {% for post in site.posts %}
       <li>
-        <time class="label">{{ post.date | date_to_string }}</time>
+        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
         <a href="{{ post.url }}">{{ post.title }}</a>
       </li>
     {% endfor %}

@@ -11,5 +11,5 @@ layout: post
 相信我，你只需要三步:
 
 1. 通读一遍 [Jekyll Wiki](https://github.com/mojombo/jekyll/wiki)
-2. 参考已有的[站点](https://github.com/mojombo/jekyll/wiki/Sites) (比如[我的](http://github.com/gonglexin/gonglexin.github.com))
+2. 参考已有的[站点](https://github.com/mojombo/jekyll/wiki/Sites) (比如[我的](https://github.com/gonglexin/gonglexin.github.io))
 3. Just do it!

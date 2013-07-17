@@ -43,11 +43,18 @@ article h4 {
   margin-top: 30px;
 }
 
+.year {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
 /* Footer */
 footer {
   margin-top: 1em;
-	border-top: 1px dashed #CCC;
+  border-top: 1px dashed #CCC;
 }
 footer p {
-	color: #999;
+  color: #999;
 }

@@ -5,11 +5,22 @@ title: Archive
 
 <section id="archive">
   <ul>
-    {% for post in site.posts %}
-      <li>
-        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}">{{ post.title }}</a>
-      </li>
-    {% endfor %}
+  {% for post in site.posts %}
+
+    {% unless post.next %}
+      <li class="year">{{ post.date | date: '%Y' }}</li>
+    {% else %}
+      {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+      {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+      {% if year != nyear %}
+        <li class="year">{{ post.date | date: '%Y' }}</li>
+      {% endif %}
+    {% endunless %}
+
+    <li>
+      <time>{{ post.date | date:"%m-%d" }}</time>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
   </ul>
 </section>

@@ -8,16 +8,24 @@
     <meta name="description" content="gonglexin,秦关属楚,blog">
     <meta name="author" content="gonglexin">
 
+    <link rel="stylesheet" href="/assets/css/normalize.css" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/highlight.css" />
     <link href='http://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
     <link rel="alternate"  type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
   </head>
   <body>
-    <div id="container">
-      {% include header.html %}
-      <div> {{ content }} </div>
-      {% include footer.html %}
+    <div class="container">
+      {% include nav.html %}
+      <div id="wrapper">
+        <div id="header">
+          <a href="/">Lexin Gong</a>
+        </div>
+        <div id="content">
+          {{ content }}
+          {% include footer.html %}
+        </div>
+      </div>
     </div>
 
     <script type="text/javascript" charset="utf-8">

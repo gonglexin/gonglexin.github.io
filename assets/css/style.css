@@ -12,36 +12,49 @@ a:hover {
   color: black;
 }
 
-#container {
-  margin: 1em;
+.container {
+  margin: 0 auto;
+  width: 960px;
 }
 
-/* Archive & About page */
+nav {
+  float: left;
+  margin-top: 60px;
+  line-height: 30px;
+  margin-right: 40px;
+}
+
+nav > ul {
+  list-style: none;
+}
+
+nav > ul a {
+  text-decoration: none;
+}
+
+#wrapper {
+  margin-top: 40px;
+  float: left;
+  width: 600px;
+}
+
+#header {
+  font-size: 120%;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+#header a {
+  text-decoration: none;
+}
+
+#content {
+  padding: 10px 0 0 30px;
+  border-left: 1px dashed #ccc;
+  border-top: 1px dashed #ccc;
+}
+
 article {
-  margin-top: 20px;
   margin-bottom: 40px;
-}
-
-/* Typography in article */
-article h1 {
-  font-size: 24px;
-  line-height: 40px;
-}
-article h2 {
-  font-size: 18px;
-  line-height: 40px;
-}
-article h3 {
-  font-size: 14px;
-  line-height: 40px;
-}
-article h4 {
-  font-size: 12px;
-  line-height: 40px;
-}
-
-#archive, #about, #works {
-  margin-top: 30px;
 }
 
 .year {
@@ -56,6 +69,7 @@ footer {
   margin-top: 1em;
   border-top: 1px dashed #CCC;
 }
+
 footer p {
   color: #999;
 }

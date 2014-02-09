@@ -57,6 +57,10 @@ article {
   margin-bottom: 40px;
 }
 
+article > header > h1 > a {
+  text-decoration: none;
+}
+
 .year {
   display: block;
   font-size: 18px;

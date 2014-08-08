@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "Rails 使用 mongoDB 和 Slim"
 categories: [tech]
 ---

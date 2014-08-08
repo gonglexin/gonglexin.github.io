@@ -1,2 +1,10 @@
 highlighter: rouge
 permalink: /posts/:title
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      layout: "post"

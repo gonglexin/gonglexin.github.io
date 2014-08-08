@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Move to Octopress
 date: 2011-12-06 22:08
 ---

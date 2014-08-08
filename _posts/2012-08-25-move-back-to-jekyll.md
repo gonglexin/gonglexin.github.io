@@ -1,7 +1,3 @@
----
-layout: post
----
-
 把 blog 又换回 [Jekyll](https://github.com/mojombo/jekyll) 了，从零开始动手，<strike>只用了几行 CSS 稍微控制下，觉得也挺好。简单就是美。</strike> Thanks to [bootstrap](http://twitter.github.com/bootstrap)。
 
 ## 为什么要换回 Jekyll

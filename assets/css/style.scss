@@ -1,3 +1,6 @@
+---
+---
+
 /* Base */
 body {
   font-family: 'Galdeano', sans-serif;
@@ -22,15 +25,15 @@ nav {
   margin-top: 60px;
   line-height: 30px;
   margin-right: 40px;
+
+  ul {
+    list-style: none;
+    a {
+      text-decoration: none;
+    }
+  }
 }
 
-nav > ul {
-  list-style: none;
-}
-
-nav > ul a {
-  text-decoration: none;
-}
 
 #wrapper {
   margin-top: 40px;
@@ -42,9 +45,9 @@ nav > ul a {
   font-size: 120%;
   font-weight: bold;
   margin-bottom: 20px;
-}
-#header a {
-  text-decoration: none;
+  a {
+    text-decoration: none;
+  }
 }
 
 #content {
@@ -55,10 +58,9 @@ nav > ul a {
 
 article {
   margin-bottom: 40px;
-}
-
-article > header > h1 > a {
-  text-decoration: none;
+  header > h1 > a {
+    text-decoration: none;
+  }
 }
 
 .year {
@@ -72,8 +74,8 @@ article > header > h1 > a {
 footer {
   margin-top: 1em;
   border-top: 1px dashed #CCC;
+  p {
+    color: #999;
+  }
 }
 
-footer p {
-  color: #999;
-}

@@ -1,4 +1,4 @@
-highlighter: rouge
+highlighter: pygments
 permalink: /posts/:title
 
 defaults:

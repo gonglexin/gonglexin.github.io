@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Mac 下临时显示隐藏的文件和文件夹
 categories: [tech]
 ---

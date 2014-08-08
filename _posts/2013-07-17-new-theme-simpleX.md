@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "新的主题 simpleX"
 categories: [life]
 ---

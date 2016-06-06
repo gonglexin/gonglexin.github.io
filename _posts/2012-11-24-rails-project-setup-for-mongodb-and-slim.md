@@ -17,18 +17,20 @@ categories: [tech]
 ## 修改 Gemfile
 在 Gemfile 里面添加以下几句之后执行 `bundle install`
 
-{% highlight ruby %}
+```ruby
 gem 'slim-rails'
 gem 'mongoid'
 group :test, :development do
   gem 'minitest-rails'
 end
-{% endhighlight %}
+```
 
 ## 生成数据库配置和 minitest helper 文件
-`rails generate mongoid:config`
 
-`rails generate mini_test:install`
+```shell
+rails generate mongoid:config
+rails generate mini_test:install
+```
 
 ## Slim 页面
 把 application.html.erb 转换成 slim 格式，可以使用 [html2slim](http://html2slim.herokuapp.com/) 或者自己手动修改。参见我改好的[版本](https://gist.github.com/4139805)

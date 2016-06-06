@@ -1,10 +1,13 @@
-highlighter: pygments
 permalink: /posts/:title
+
+sass:
+  sass_dir: _sass
+  style: compressed
 
 defaults:
   -
     scope:
       path: ""
-      type: "post"
+      type: "posts"
     values:
       layout: "post"

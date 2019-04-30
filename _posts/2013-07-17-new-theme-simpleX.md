@@ -7,5 +7,5 @@ categories: [life]
 
 截图留念
 
-![Archive](https://ww1.sinaimg.cn/large/6601622djw1e6pkxwabktj20iw0f4757.jpg "Archive")
-![About](https://ww2.sinaimg.cn/large/6601622djw1e6pkyewh2tj20kw0i8gml.jpg "About")
+Archive<img referrerpolicy="no-referrer" src="https://ww1.sinaimg.cn/large/6601622djw1e6pkxwabktj20iw0f4757.jpg" alt="Archive" />
+About<img referrerpolicy="no-referrer" src="https://ww2.sinaimg.cn/large/6601622djw1e6pkyewh2tj20kw0i8gml.jpg" alt="About" />

@@ -9,21 +9,15 @@
     <meta name="author" content="gonglexin">
 
     <link rel="stylesheet" href="/assets/css/main.css" />
-    <link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
     <link rel="alternate"  type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
   </head>
   <body>
     <div class="container">
       {% include nav.html %}
-      <div id="wrapper">
-        <div id="header">
-          <a href="/">Lexin Gong</a>
-        </div>
-        <div id="content">
-          {{ content }}
-          {% include footer.html %}
-        </div>
+      <div id="content">
+        {{ content }}
       </div>
+      {% include footer.html %}
     </div>
 
     <script type="text/javascript" charset="utf-8">

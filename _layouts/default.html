@@ -12,13 +12,11 @@
     <link rel="alternate"  type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
   </head>
   <body>
-    <div class="container">
-      {% include nav.html %}
-      <div id="content">
-        {{ content }}
-      </div>
-      {% include footer.html %}
-    </div>
+    {% include nav.html %}
+
+    <div id="content">{{ content }}</div>
+
+    {% include footer.html %}
 
     <script type="text/javascript" charset="utf-8">
       var k=[];

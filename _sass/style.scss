@@ -1,7 +1,7 @@
 /* Base */
 body {
   font-family: Fira Code,Monaco,Consolas,Ubuntu Mono,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,monospace,sans-serif;
-  line-height: 20px;
+  margin: 0 auto;
 }
 
 a {
@@ -12,19 +12,11 @@ a:hover {
   color: black;
 }
 
-.container {
-  margin: 0 auto;
-}
-
 nav {
   font-size: 120%;
-  line-height: 30px;
-
   ul {
-    margin-left: 0;
-    list-style: none;
     li {
-      display: inline;
+      display: inline-flex;
       a {
         text-decoration: none;
       }
@@ -33,9 +25,9 @@ nav {
 }
 
 #content {
-  margin: 1em 2em;
-  padding-top: 1em;
+  padding: 1em 2em;
   border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
 }
 
 article {
@@ -55,7 +47,6 @@ article {
 /* Footer */
 footer {
   margin: 1em 2em;
-  border-top: 1px dashed #CCC;
   p {
     color: #999;
   }

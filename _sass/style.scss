@@ -29,6 +29,13 @@ nav {
   border-bottom: 1px dashed #ccc;
 }
 
+#archive {
+  line-height: 1.5rem;
+  a {
+    text-decoration: none;
+  }
+}
+
 article {
   margin-bottom: 40px;
   header > h1 > a {
@@ -48,5 +55,12 @@ footer {
   margin: 1em 2em;
   p {
     color: #999;
+  }
+}
+
+/* About */
+#about {
+  li {
+    line-height: 1.5rem;
   }
 }

@@ -1,42 +1,45 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>秦关属楚{% if page.title %} - {{ page.title }}{% endif %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="gonglexin,秦关属楚,blog">
-    <meta name="author" content="gonglexin">
 
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="alternate"  type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
-  </head>
-  <body>
-    {% include nav.html %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>秦关属楚{% if page.title %} - {{ page.title }}{% endif %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="gonglexin,秦关属楚,blog">
+  <meta name="author" content="gonglexin">
 
-    <div id="content">{{ content }}</div>
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="alternate" type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
+</head>
 
-    {% include footer.html %}
+<body>
+  {% include nav.html %}
 
-    <script type="text/javascript" charset="utf-8">
-      var k=[];
-      document.onkeydown = function(e){
-        e = e || window.event;
-        k.push(e.keyCode);
-        if(k.toString().indexOf("66,85,78,78,89") >= 0){
-          k=[];
-          window.location.href = "/bunny.html";
-        }
+  <div id="content">{{ content }}</div>
+
+  {% include footer.html %}
+
+  <script type="text/javascript" charset="utf-8">
+    var k = [];
+    document.onkeydown = function (e) {
+      e = e || window.event;
+      k.push(e.keyCode);
+      if (k.toString().indexOf("66,85,78,78,89") >= 0) {
+        k = [];
+        window.location.href = "/bunny.html";
       }
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECRCJ3JT9C"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0NGJ4YDCC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'G-ECRCJ3JT9C');
-    </script>
-  </body>
+    gtag('config', 'G-M0NGJ4YDCC');
+  </script>
+</body>
+
 </html>

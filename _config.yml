@@ -1,12 +1,7 @@
 permalink: /posts/:title
 
-sass:
-  sass_dir: _sass
-  style: compressed
-
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
       type: "posts"
     values:

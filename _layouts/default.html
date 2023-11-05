@@ -11,12 +11,20 @@
 
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="alternate" type="application/atom+xml" title="秦关属楚" href="/atom.xml" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      plugins: [
+        require('@tailwindcss/typography'),
+      ],
+    }
+  </script>
 </head>
 
-<body>
+<body class="bg-yellow-50 font-mono">
   {% include nav.html %}
 
-  <div id="content">{{ content }}</div>
+  <main class="max-w-screen-md mx-auto p-8">{{ content }}</main>
 
   {% include footer.html %}
 

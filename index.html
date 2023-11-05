@@ -3,15 +3,16 @@ layout: default
 ---
 
 {% for post in site.posts limit:3 %}
-  <article>
-    <header>
-      <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-    </header>
-    <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-    <section>
-      {{ post.content }}
-    </section>
-  </article>
+<article class="mb-12">
+  <header class="flex flex-row py-2">
+    <h1 class="text-xl font-bold"><a href="{{ post.url }}">{{ post.title }}</a></h1>
+    <div class="grow"></div>
+    <time class="text-gray-500">{{ post.date | date: "%Y-%m-%d" }}</time>
+  </header>
+  <section class="prose">
+    {{ post.content }}
+  </section>
+</article>
 {% endfor %}
 
-<a href="/archive.html">All posts</a>
+<a class="underline text-sm" href="/archive.html">All posts</a>

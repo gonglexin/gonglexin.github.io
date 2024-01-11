@@ -3,9 +3,10 @@ layout: default
 ---
 
 <div id="about" class="prose mx-auto">
-  <img src="/assets/images/me.png" style="width: 200px;" alt="me">
+  <img src="/assets/images/me.png" style="width: 200px" alt="me" />
   <p>Lexin Gong - Alchemist(Elixir) & Rubyist.</p>
-  <div class="text-xs font-bold text-rose-800 hover:uppercase">I'm currently looking for a remote job (Elixir, Ruby).
+  <div class="text-xs font-bold text-rose-800 hover:uppercase">
+    I'm currently looking for a remote job (Elixir, Ruby).
   </div>
   <p class="font-bold">Contacts:</p>
   <ul class="list-disc">
@@ -18,13 +19,20 @@ layout: default
   <ul class="list-disc">
     <li>
       <a href="https://pods.ee" target="_blank">pods.ee</a>
-      <p class="text-sm pl-6">A <a href="https://www.phoenixframework.org/">phoenix</a> <a
-          href="https://github.com/phoenixframework/phoenix_live_view">LiveView</a> project which I used it to listen to
-        podcasts. Deploy at <a href="https://fly.io">Fly.io</a>.</p>
+      <p class="text-sm pl-6">
+        A <a href="https://www.phoenixframework.org/">phoenix</a>
+        <a href="https://github.com/phoenixframework/phoenix_live_view"
+          >LiveView</a
+        >
+        project which I used it to listen to podcasts. Deploy at
+        <a href="https://fly.io">Fly.io</a>.
+      </p>
     </li>
     <li>
       <a href="https://ex-instagram.fly.dev" target="_blank">ExInstagram</a>
-      <p class="text-sm pl-6">An Instagram clone with AI-powered users who have their own thoughts.</p>
+      <p class="text-sm pl-6">
+        An Instagram clone with AI-powered users who have their own thoughts.
+      </p>
     </li>
   </ul>
 
@@ -32,8 +40,12 @@ layout: default
   <ul class="list-disc">
     {% for post in site.posts limit:3 %}
     <li>
-      <time>{{ post.date | date:"%Y-%m-%d" }}</time>
-      <a class="no-underline hover:font-bold" href="{{ post.url }}">{{ post.title }}</a>
+      <time class="text-gray-400 text-xs"
+        >{{ post.date | date:"%Y-%m-%d" }}</time
+      >
+      <a class="no-underline hover:font-bold" href="{{ post.url }}"
+        >{{ post.title }}</a
+      >
     </li>
     {% endfor %}
   </ul>

@@ -1,3 +1,4 @@
 _site/
 todo.md
 .jekyll-metadata
+.DS_Store

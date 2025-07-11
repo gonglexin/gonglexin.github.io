@@ -11,6 +11,9 @@
 
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="alternate" type="application/atom+xml" title="Lexin Gong" href="/atom.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
   <script>
     tailwind.config = {
@@ -21,7 +24,7 @@
   </script>
 </head>
 
-<body class="bg-yellow-50 font-mono underline-offset-4">
+<body class="bg-yellow-50 underline-offset-4">
   {% include nav.html %}
 
   <main class="max-w-screen-md mx-auto p-8">{{ content }}</main>

@@ -2,8 +2,8 @@
 layout: default
 ---
 
-<div id="about" class="prose mx-auto">
-  <img src="/assets/images/me.png" class="w-52" alt="me" />
+<div id="about" class="prose mx-auto leading-none">
+  <img src="/assets/images/me.png" class="w-16" alt="me" />
   <p>Lexin Gong - Alchemist(Elixir) & Rubyist.</p>
   <div class="text-xs font-bold text-rose-800 hover:uppercase">
     I'm currently looking for a remote job (Elixir, Ruby).
@@ -46,7 +46,7 @@ layout: default
   <ul class="list-disc">
     {% for post in site.posts limit:3 %}
     <li>
-      <div class="flex items-start gap-x-4 text-sm">
+      <div class="flex items-start gap-x-2 text-sm">
         <time class="text-gray-400">{{ post.date | date:"%Y-%m-%d" }}</time>
         <a class="no-underline hover:font-bold hover:underline hover:underline-offset-4" href="{{ post.url }}">{{
           post.title }}</a>

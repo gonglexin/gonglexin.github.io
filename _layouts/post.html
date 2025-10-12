@@ -34,3 +34,24 @@ layout: default
 <div class="mt-4">
   <script async src="https://comments.app/js/widget.js?2" data-comments-app-website="Zq9RkC0i" data-limit="5"></script>
 </div>
+
+<!-- Scroll to top button -->
+<button id="scrollToTop" class="fixed bottom-4 right-4 bg-yellow-200 hover:bg-yellow-300 text-gray-700 p-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-30" aria-label="Scroll to top">
+  ↑
+</button>
+
+<script>
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+    } else {
+      scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

@@ -22,6 +22,35 @@
       ],
     }
   </script>
+  <script type="module">
+    import { codeToHtml } from 'https://esm.sh/shiki@3.13.0';
+
+    async function highlightCode() {
+      const codeBlocks = document.querySelectorAll('pre code');
+
+      for (const block of codeBlocks) {
+        const language = block.className.match(/language-(\w+)/)?.[1] || 'text';
+        const code = block.textContent;
+
+        try {
+          const html = await codeToHtml(code, {
+            lang: language,
+            theme: 'snazzy-light'
+          });
+
+          block.parentElement.outerHTML = html;
+        } catch (error) {
+          console.error('Shiki highlighting error:', error);
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', highlightCode);
+    } else {
+      highlightCode();
+    }
+  </script>
 </head>
 
 <body class="bg-yellow-50 underline-offset-4">

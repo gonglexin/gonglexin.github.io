@@ -13,6 +13,23 @@ layout: default
   </section>
 </article>
 
+<nav class="mt-8 flex justify-between border-t border-dashed pt-4">
+  <div>
+    {% if page.previous %}
+      <a href="{{ page.previous.url }}" class="text-sm hover:underline">
+        ← {{ page.previous.title }}
+      </a>
+    {% endif %}
+  </div>
+  <div>
+    {% if page.next %}
+      <a href="{{ page.next.url }}" class="text-sm hover:underline">
+        {{ page.next.title }} →
+      </a>
+    {% endif %}
+  </div>
+</nav>
+
 <div class="mt-8 scale-50 origin-left">
   <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button"
     data-slug="gonglexin" data-color="#40DCA5" data-emoji="" data-font="Comic" data-text="Buy me a coffee"

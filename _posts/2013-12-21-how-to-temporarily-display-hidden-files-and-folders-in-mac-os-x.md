@@ -7,11 +7,15 @@ categories: [tech]
 
 以前我一般是打开终端输入如下命令:
 
-`defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder`
+```shell
+defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder
+```
 
 这条命令有一个不便利的地方就是执行之后系统就会一直显示那些隐藏文件，往往等你操作完之后，你又需要把值重新设置回去:
 
-`defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder`
+```shell
+defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder
+```
 
 今天才发现，原来在选择文件的时候, 只需要按下 **`Command + Shift + .`** 组合键就可以临时地显示隐藏文件了。当然这不仅仅适用于这一个软件，Mac 下所有软件的文件选择窗口都是可以这么做的。
 

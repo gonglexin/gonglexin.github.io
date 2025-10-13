@@ -22,6 +22,31 @@
       ],
     }
   </script>
+  <style>
+    /* Inline code styling */
+    .prose code {
+      background-color: #fef3c7 !important;
+      padding: 0.125rem 0.375rem !important;
+      border-radius: 0.25rem !important;
+      font-weight: 600 !important;
+      color: #92400e !important;
+    }
+
+    /* Hide backticks in inline code */
+    .prose code::before,
+    .prose code::after {
+      content: "" !important;
+    }
+
+    /* Don't apply to code blocks */
+    .prose pre code {
+      background-color: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      font-weight: normal !important;
+      color: inherit !important;
+    }
+  </style>
   <script type="module">
     import { codeToHtml } from 'https://esm.sh/shiki@3.13.0';
 

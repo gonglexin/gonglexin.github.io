@@ -1,15 +1,131 @@
-<nav class="sticky top-0 bg-yellow-50 border-b border-dashed flex max-sm:text-xs items-center z-40">
+<nav class="sticky top-0 bg-base-200 border-b border-dashed flex max-sm:text-xs items-center z-40">
   <ul class="flex flex-row gap-x-4 p-4 max-sm:gap-x-2 max-sm:p-2" >
-    <li class="hover:underline"><a href="/" class="px-2 py-1 {% if page.url == '/' %}bg-yellow-200{% endif %}">Home</a></li>
-    <li class="hover:underline"><a href="/archive" class="px-2 py-1 {% if page.url == '/archive' %}bg-yellow-200{% endif %}">Archive</a></li>
+    <li class="hover:underline"><a href="/" class="px-2 py-1 {% if page.url == '/' %}bg-primary/20{% endif %}">Home</a></li>
+    <li class="hover:underline"><a href="/archive" class="px-2 py-1 {% if page.url == '/archive' %}bg-primary/20{% endif %}">Archive</a></li>
     <li class="hover:underline"><a href="/atom.xml">Atom</a></li>
   </ul>
 
   {% if page.url contains '/posts/' %}
-    <div class="flex flex-row p-4 max-sm:p-2 ml-8 space-x-4 justify-center w-full">
-      <h1 class="font-bold bg-yellow-200 px-2">{{ page.title }}</h1>
+    <div class="flex flex-row p-4 max-sm:p-2 ml-4 space-x-4 items-center flex-1">
+      <h1 class="font-bold bg-primary/20 px-2">{{ page.title }}</h1>
       <div class="grow"></div>
       <time class="text-gray-500 max-sm:hidden">{{ page.date | date: "%Y-%m-%d" }}</time>
     </div>
   {% endif %}
+
+  <div class="dropdown dropdown-end ml-auto relative z-50">
+    <div tabindex="0" role="button" class="btn btn-sm btn-ghost m-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+      </svg>
+      <svg
+        width="12px"
+        height="12px"
+        class="inline-block h-2 w-2 fill-current opacity-60"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 2048 2048">
+        <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+      </svg>
+    </div>
+    <ul tabindex="-1" class="dropdown-content bg-base-300 rounded-box z-[100] w-40 p-2 shadow-2xl max-h-96 overflow-y-auto">
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Light"
+          value="light" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Dark"
+          value="dark" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Cupcake"
+          value="cupcake" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Synthwave"
+          value="synthwave" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Cyberpunk"
+          value="cyberpunk" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Retro"
+          value="retro" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Valentine"
+          value="valentine" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Aqua"
+          value="aqua" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Forest"
+          value="forest" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="Winter"
+          value="winter" />
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="theme-dropdown"
+          class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
+          aria-label="GLX"
+          value="glx" />
+      </li>
+    </ul>
+  </div>
+
 </nav>

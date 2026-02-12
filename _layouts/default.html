@@ -9,11 +9,30 @@
   <meta name="description" content="Lexin Gong,gonglexin,blog">
   <meta name="author" content="gonglexin">
 
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lexin Gong{% if page.title %} - {{ page.title }}{% endif %}">
+  <meta property="og:description" content="Lexin Gong's personal blog - Elixir, Ruby, and tech articles">
+  <meta property="og:url" content="https://gonglexin.com{{ page.url }}">
+  <meta property="og:site_name" content="Lexin Gong">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@gonglexin">
+  <meta name="twitter:title" content="Lexin Gong{% if page.title %} - {{ page.title }}{% endif %}">
+  <meta name="twitter:description" content="Lexin Gong's personal blog - Elixir, Ruby, and tech articles">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://gonglexin.com{{ page.url }}">
+
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="alternate" type="application/atom+xml" title="Lexin Gong" href="/atom.xml" />
+
+  <!-- Preconnect hints for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
   <script>
     tailwind.config = {
@@ -79,11 +98,17 @@
 </head>
 
 <body class="bg-yellow-50 underline-offset-4 flex flex-col min-h-screen">
-  {% include nav.html %}
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-yellow-200 px-4 py-2 rounded font-bold">Skip to main content</a>
 
-  <main class="px-6 py-4 flex-grow">{{ content }}</main>
+  <header>
+    {% include nav.html %}
+  </header>
 
-  {% include footer.html %}
+  <main id="main-content" class="px-6 py-4 flex-grow" role="main">{{ content }}</main>
+
+  <footer>
+    {% include footer.html %}
+  </footer>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0NGJ4YDCC"></script>

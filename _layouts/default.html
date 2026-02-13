@@ -110,31 +110,106 @@
   <script type="module">
     import { codeToHtml } from 'https://esm.sh/shiki@3.13.0';
 
-    async function highlightCode() {
-      const codeBlocks = document.querySelectorAll('pre code');
+    // Map DaisyUI themes to Shiki themes
+    const themeMapping = {
+      'glx': 'snazzy-light',
+      'light': 'github-light',
+      'dark': 'github-dark',
+      'cupcake': 'vitesse-light',
+      'bumblebee': 'nord',
+      'emerald': 'one-dark-pro',
+      'corporate': 'dracula',
+      'synthwave': 'nord',
+      'retro': 'vitesse-light',
+      'cyberpunk': 'material-theme-darker',
+      'valentine': 'rose-pine-dawn',
+      'halloween': 'dracula',
+      'garden': 'nord',
+      'forest': 'material-theme-darker',
+      'aqua': 'vitesse-light',
+      'lofi': 'github-dark-dimmed',
+      'pastel': 'vitesse-light',
+      'fantasy': 'rose-pine-moon',
+      'wireframe': 'github-light',
+      'black': 'one-dark-pro',
+      'luxury': 'material-theme',
+      'dracula': 'dracula',
+      'cmyk': 'one-dark-pro',
+      'autumn': 'rose-pine',
+      'business': 'github-dark',
+      'acid': 'vitesse-light',
+      'lemonade': 'snazzy-light',
+      'night': 'one-dark-pro',
+      'coffee': 'rose-pine-moon',
+      'winter': 'vitesse-light'
+    };
 
-      for (const block of codeBlocks) {
-        const language = block.className.match(/language-(\w+)/)?.[1] || 'text';
-        const code = block.textContent;
+    // Store original HTML before highlighting
+    let originalMainHTML = '';
+
+    // Get current theme
+    function getCurrentTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'glx';
+    }
+
+    // Get Shiki theme for current DaisyUI theme
+    function getShikiTheme() {
+      const currentTheme = getCurrentTheme();
+      return themeMapping[currentTheme] || 'snazzy-light';
+    }
+
+    async function highlightCode() {
+      // Store original HTML on first run
+      if (!originalMainHTML) {
+        originalMainHTML = document.querySelector('main').innerHTML;
+      }
+
+      const preElements = document.querySelectorAll('main pre:not(.shiki)');
+
+      for (const pre of preElements) {
+        const code = pre.querySelector('code');
+        if (!code) continue;
+
+        const language = code.className.match(/language-(\w+)/)?.[1];
+        if (!language) continue;
+
+        const codeContent = code.textContent;
 
         try {
-          const html = await codeToHtml(code, {
+          const html = await codeToHtml(codeContent, {
             lang: language,
-            theme: 'snazzy-light'
+            theme: getShikiTheme()
           });
 
-          block.parentElement.outerHTML = html;
+          pre.outerHTML = html;
         } catch (error) {
           console.error('Shiki highlighting error:', error);
         }
       }
     }
 
+    // Initial highlight
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', highlightCode);
     } else {
       highlightCode();
     }
+
+    // Re-highlight when theme changes
+    let debounceTimer;
+    document.querySelectorAll('.theme-controller').forEach(radio => {
+      radio.addEventListener('change', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          // Restore original HTML (without highlighting)
+          if (originalMainHTML) {
+            document.querySelector('main').innerHTML = originalMainHTML;
+          }
+          // Re-highlight with new theme
+          highlightCode();
+        }, 100);
+      });
+    });
   </script>
 </head>
 

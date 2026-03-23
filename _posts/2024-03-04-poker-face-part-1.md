@@ -16,7 +16,7 @@ Check out the introduction video here: [![Poker Face intro video](https://img.yo
 In this blog series, I'll guide you through every detail of the implementation.
 Welcome to Part 1.
 
-In this very fist part, we'll tackle a couple of key steps:
+In this very first part, we'll tackle a couple of key steps:
 
 1. Opening the camera and capturing the video frame.
 2. Sending the frame to a LiveView process and interfacing it with Gemini or OpenAI.

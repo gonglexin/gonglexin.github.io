@@ -48,7 +48,7 @@ end
 ```elixir
 <div>
   <.header>
-    Pokcer Face
+    Poker Face
     <:subtitle></:subtitle>
   </.header>
   <div class="grid grid-cols-2 gap-x-2">

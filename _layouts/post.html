@@ -2,7 +2,8 @@
 layout: default
 ---
 
-<article>
+<article aria-labelledby="post-title">
+  <h1 id="post-title" class="sr-only">{{ page.title }}</h1>
   <section class="prose max-w-none">
     {{ content }}
   </section>
@@ -26,8 +27,8 @@ layout: default
 </nav>
 
 <div class="mt-8 scale-50 origin-left">
-  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button"
-    data-slug="gonglexin" data-color="#40DCA5" data-emoji="" data-font="Comic" data-text="Buy me a coffee"
+  <script async src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button"
+    data-slug="gonglexin" data-color="#40DCA5" data-emoji=""  data-font="Comic" data-text="Buy me a coffee"
     data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
 </div>
 
@@ -52,6 +53,7 @@ layout: default
   });
 
   scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 </script>

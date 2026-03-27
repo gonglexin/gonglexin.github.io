@@ -3,14 +3,15 @@ layout: default
 ---
 
 <div id="about" class="prose max-w-none leading-none">
-  <img src="/assets/images/me.png" class="w-16" alt="Profile photo of Lexin Gong" />
-  <p>Lexin Gong - Alchemist(Elixir) & Rubyist.
-    <span class="text-xs font-bold text-rose-800 hover:uppercase">
+  <img src="/assets/images/me.png" class="size-16" alt="Profile photo of Lexin Gong" width="64" height="64" />
+  <h1 class="text-2xl">Lexin Gong</h1>
+  <p>Alchemist(Elixir) & Rubyist.
+    <span class="text-xs font-bold text-primary hover:uppercase">
       (I'm currently looking for a remote job)
     </span>
   </p>
   <p class="font-bold">Contacts:</p>
-  <ul class="list-disc flex space-x-8">
+  <ul class="list-disc flex flex-wrap gap-x-8 gap-y-2">
     <li><a href="mailto:gonglexin@gmail.com">Email</a></li>
     <li><a href="https://t.me/gonglexin" target="_blank" rel="noopener noreferrer">Telegram</a></li>
   </ul>
@@ -48,7 +49,7 @@ layout: default
     {% for post in site.posts limit:3 %}
     <li>
       <div class="flex items-start gap-x-2 text-sm">
-        <time class="text-gray-400">{{ post.date | date:"%Y-%m-%d" }}</time>
+        <time class="text-base-content/40">{{ post.date | date:"%Y-%m-%d" }}</time>
         <a class="no-underline hover:font-bold hover:underline hover:underline-offset-4" href="{{ post.url }}">{{
           post.title }}</a>
       </div>

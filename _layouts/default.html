@@ -220,7 +220,7 @@
     {% include nav.html %}
   </header>
 
-  <main id="main-content" class="px-6 py-4 flex-grow" role="main">{{ content }}</main>
+  <main id="main-content" class="px-6 py-4 flex-grow">{{ content }}</main>
 
   <footer>
     {% include footer.html %}
@@ -238,8 +238,6 @@
 
   <script>
     (function() {
-      const themeController = document.querySelector('.theme-controller');
-
       const savedTheme = localStorage.getItem('theme') || 'glx';
 
       document.documentElement.setAttribute('data-theme', savedTheme);

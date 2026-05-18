@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自建房网络拓扑图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0f172a; color: #e2e8f0; padding: 40px 20px; min-height: 100vh; }
+  h1 { text-align: center; font-size: 24px; margin-bottom: 4px; color: #f8fafc; }
+  .subtitle { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 32px; }
+
+  .floor { background: #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 1px solid #334155; }
+  .floor-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge { padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; color: white; }
+  .badge.blue { background: #3b82f6; }
+  .badge.green { background: #10b981; }
+  .badge.orange { background: #f59e0b; }
+  .badge.red { background: #ef4444; }
+  .badge.purple { background: #8b5cf6; }
+  .badge.cyan { background: #06b6d4; }
+
+  .device-main { background: #0f172a; border: 2px solid #3b82f6; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  .device-main .name { font-size: 16px; font-weight: 700; color: #60a5fa; }
+  .device-main .model { font-size: 13px; color: #94a3b8; margin-top: 2px; }
+
+  .port-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; margin-top: 12px; }
+  .port-item { display: flex; align-items: center; gap: 8px; background: #0f172a; border-radius: 8px; padding: 7px 12px; border: 1px solid #334155; font-size: 13px; }
+  .port-label { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; min-width: 36px; text-align: center; letter-spacing: 0.5px; }
+  .port-label.v20 { background: #065f46; color: #6ee7b7; }
+  .port-label.v30 { background: #4c1d95; color: #c4b5fd; }
+  .port-label.v40 { background: #7f1d1d; color: #fca5a5; }
+  .port-label.v50 { background: #164e63; color: #67e8f9; }
+  .port-label.trunk { background: #1e3a5f; color: #93c5fd; }
+  .port-label.wan { background: #78350f; color: #fbbf24; }
+  .port-label.free { background: #1e1b4b; color: #a5b4fc; opacity: 0.5; }
+  .port-label.poe { background: #065f46; color: #6ee7b7; }
+  .port-target { color: #e2e8f0; }
+  .port-target .sub { color: #64748b; font-size: 11px; }
+  .port-target .tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; margin-left: 4px; }
+  .tag.poe { background: #065f46; color: #6ee7b7; }
+  .tag.hub { background: #7c2d12; color: #fed7aa; }
+
+  .inter-floor { text-align: center; padding: 8px 0; }
+  .inter-floor .line { width: 2px; height: 24px; background: linear-gradient(to bottom, #3b82f6, #10b981); margin: 0 auto; position: relative; }
+  .inter-floor .line::before, .inter-floor .line::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; }
+  .inter-floor .line::before { top: -4px; background: #3b82f6; }
+  .inter-floor .line::after { bottom: -4px; background: #10b981; }
+  .inter-floor .label { color: #64748b; font-size: 11px; margin-top: 2px; }
+
+  .cctv { background: #1a0f0f; border: 2px solid #991b1b; border-radius: 12px; padding: 16px; margin-top: 12px; }
+  .cctv .title { color: #f87171; font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+
+  .nvr-box { background: #1a0f0f; border: 2px solid #991b1b; border-radius: 12px; padding: 16px; margin-top: 12px; }
+  .nvr-box .name { color: #f87171; font-weight: 700; font-size: 15px; }
+  .nvr-box .detail { color: #94a3b8; font-size: 13px; margin-top: 4px; }
+  .nvr-box .detail span { color: #fbbf24; }
+
+  /* VLAN Summary */
+  .vlan-section { background: #1e293b; border-radius: 16px; padding: 24px; border: 1px solid #334155; margin-bottom: 20px; }
+  .vlan-section h2 { font-size: 16px; margin-bottom: 16px; color: #f8fafc; }
+  .vlan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .vlan-table th { text-align: left; padding: 8px 12px; background: #0f172a; color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #334155; }
+  .vlan-table td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+  .vlan-table tr:hover td { background: #0f172a; }
+  .vlan-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .vlan-dot.g { background: #10b981; }
+  .vlan-dot.p { background: #8b5cf6; }
+  .vlan-dot.r { background: #ef4444; }
+  .vlan-dot.c { background: #06b6d4; }
+  .vlan-dot.y { background: #f59e0b; }
+
+  /* Firewall */
+  .fw-section { background: #1e293b; border-radius: 16px; padding: 24px; border: 1px solid #334155; margin-bottom: 20px; }
+  .fw-section h2 { font-size: 16px; margin-bottom: 16px; color: #f8fafc; }
+  .fw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .fw-item { display: flex; align-items: flex-start; gap: 10px; background: #0f172a; border-radius: 8px; padding: 12px 16px; border: 1px solid #334155; font-size: 13px; }
+  .fw-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .fw-text { line-height: 1.5; }
+  .fw-text strong { color: #f8fafc; }
+  .fw-text .note { color: #fbbf24; font-size: 12px; }
+
+  /* Summary */
+  .summary { background: #1e293b; border-radius: 16px; padding: 24px; border: 1px solid #334155; }
+  .summary h2 { font-size: 16px; margin-bottom: 16px; color: #f8fafc; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .summary-item { background: #0f172a; border-radius: 8px; padding: 12px 16px; }
+  .summary-item .label { color: #64748b; font-size: 12px; margin-bottom: 4px; }
+  .summary-item .value { color: #f8fafc; font-size: 14px; font-weight: 600; }
+  .summary-item .value.price { color: #fbbf24; }
+  .summary-item .value.green { color: #34d399; }
+</style>
+</head>
+<body>
+
+<h1>自建房网络拓扑图</h1>
+<p class="subtitle">Lexin Gong · 2026年5月 · 锐捷 + 海康威视 + 米家 · VLAN 划分版</p>
+<p class="subtitle" style="color: #94a3b8;">本页由 AI 生成，博客文章版本请访问 <a href="/posts/home-network-smart-home-plan" style="color: #60a5fa;">gonglexin.com/posts/home-network-smart-home-plan</a></p>
+
+<!-- VLAN 概览 -->
+<div class="vlan-section">
+  <h2>📡 VLAN 划分</h2>
+  <table class="vlan-table">
+    <thead>
+      <tr><th>VLAN</th><th>名称</th><th>子网</th><th>用途</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="vlan-dot y"></span>V10</td><td>管理网络</td><td>10.10.10.0/24</td><td>交换机、AP、网关管理界面</td></tr>
+      <tr><td><span class="vlan-dot g"></span>V20</td><td>可信网络</td><td>10.20.20.0/24</td><td>电脑、电视、手机、房间网口、盘路由、<strong>中枢网关</strong></td></tr>
+      <tr><td><span class="vlan-dot p"></span>V30</td><td>智能家居</td><td>10.30.30.0/24</td><td>米家 WiFi 设备（音箱、扫地机等 IoT）</td></tr>
+      <tr><td><span class="vlan-dot r"></span>V40</td><td>安防监控</td><td>10.40.40.0/24</td><td>摄像头 ×4 + NVR（<strong>禁止外网</strong>）</td></tr>
+      <tr><td><span class="vlan-dot c"></span>V50</td><td>访客网络</td><td>10.50.50.0/24</td><td>来客 WiFi，完全隔离</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top: 16px;">
+    <table class="vlan-table">
+      <thead>
+        <tr><th>SSID</th><th>VLAN</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Home</strong></td><td><span class="vlan-dot g"></span>V20</td><td>家庭可信设备</td></tr>
+        <tr><td><strong>IoT</strong></td><td><span class="vlan-dot p"></span>V30</td><td>米家智能家居 WiFi 设备</td></tr>
+        <tr><td><strong>Guest</strong></td><td><span class="vlan-dot c"></span>V50</td><td>访客 WiFi</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 1F -->
+<div class="floor">
+  <div class="floor-title">
+    🏠 一楼 (1F)
+    <span class="badge blue">网关</span>
+    <span class="badge purple">智能家居</span>
+  </div>
+
+  <div class="device-main">
+    <div class="name">RG-EG210G-P-EV2</div>
+    <div class="model">企业网关 · 8 LAN口(PoE) + 2 WAN口</div>
+    <div class="port-grid">
+      <div class="port-item">
+        <span class="port-label wan">WAN①</span>
+        <span class="port-target">上联 2F 交换机 <span class="sub">(Trunk All)</span></span>
+      </div>
+      <div class="port-item" style="opacity:0.4">
+        <span class="port-label free">WAN②</span>
+        <span class="port-target">备用</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label trunk">LAN①</span>
+        <span class="port-target">吸顶AP ① <span class="sub">(Trunk · 多SSID)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label trunk">LAN②</span>
+        <span class="port-target">吸顶AP ② <span class="sub">(Trunk · 多SSID)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">LAN③</span>
+        <span class="port-target">TP-LINK TL-SG1005D <span class="sub">(5口千兆·贴电视背面)</span>
+          <span class="tag hub">→ 电视 + PS5 + 中枢网关①(电视背面)</span>
+        </span>
+      </div>
+      <div class="port-item" style="opacity:0.5">
+        <span class="port-label free">LAN④</span>
+        <span class="port-target">空闲 <span class="sub">(IPTV备用)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">LAN⑤</span>
+        <span class="port-target">靠墙备用网口 <span class="sub">(AP下方·电视移动备用位)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">LAN⑥</span>
+        <span class="port-target">房间网口 ①</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">LAN⑦</span>
+        <span class="port-target">房间网口 ②</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">LAN⑧</span>
+        <span class="port-target">GL.iNET MT3000 <span class="sub">(旁路由·TV/PS5手动设网关走翻墙)</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="nvr-box" style="border-color: #8b5cf6; background: #1a0f2e;">
+    <div class="name" style="color: #a78bfa;">🏠 1F 客厅 · 中枢网关① + 小交换机</div>
+    <div class="detail">
+      中枢网关①：小米 ZSWG01CM · 放电视背面 · DC圆孔电源(5V/1A)<br>
+      下挂设备：TP-LINK TL-SG1005D 5口千兆交换机(¥89·贴电视背面) → 电视 + PS5 + 中枢网关①
+    </div>
+  </div>
+</div>
+
+<!-- Link -->
+<div class="inter-floor">
+  <div class="line"></div>
+  <div class="label">Trunk All VLANs · 预埋网线</div>
+</div>
+
+<!-- 2F -->
+<div class="floor">
+  <div class="floor-title">
+    🏠 二楼 (2F)
+    <span class="badge green">交换机</span>
+    <span class="badge red">安防</span>
+    <span class="badge purple">智能家居</span>
+  </div>
+
+  <div class="device-main" style="border-color: #10b981;">
+    <div class="name" style="color: #34d399;">RG-ES218GC-P</div>
+    <div class="model">16口千兆 PoE 交换机 + 2 SFP光口 · 已用 13 口 + 备用 3 口</div>
+    <div class="port-grid">
+      <div class="port-item" style="border-color: #3b82f6;">
+        <span class="port-label trunk">上联</span>
+        <span class="port-target">← 1F 网关 <span class="sub">(Trunk All)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label trunk">P①</span>
+        <span class="port-target">吸顶AP ① <span class="sub">(Trunk · 多SSID)</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label trunk">P②</span>
+        <span class="port-target">吸顶AP ② <span class="sub">(Trunk · 多SSID)</span></span>
+      </div>
+      <div class="port-item" style="border-color: #991b1b;">
+        <span class="port-label v40">P③</span>
+        <span class="port-target">摄像头 ① <span class="tag poe">PoE</span></span>
+      </div>
+      <div class="port-item" style="border-color: #991b1b;">
+        <span class="port-label v40">P④</span>
+        <span class="port-target">摄像头 ② <span class="tag poe">PoE</span></span>
+      </div>
+      <div class="port-item" style="border-color: #991b1b;">
+        <span class="port-label v40">P⑤</span>
+        <span class="port-target">摄像头 ③ <span class="tag poe">PoE</span></span>
+      </div>
+      <div class="port-item" style="border-color: #991b1b;">
+        <span class="port-label v40">P⑥</span>
+        <span class="port-target">摄像头 ④ <span class="tag poe">PoE</span></span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">P⑦</span>
+        <span class="port-target">衣帽间</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">P⑧</span>
+        <span class="port-target">主卧</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">P⑨</span>
+        <span class="port-target">小孩房 ①</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">P⑩</span>
+        <span class="port-target">小孩房 ②</span>
+      </div>
+      <div class="port-item" style="border-color: #991b1b;">
+        <span class="port-label v40">P⑪</span>
+        <span class="port-target">书房 → NVR</span>
+      </div>
+      <div class="port-item">
+        <span class="port-label v20">P⑫</span>
+        <span class="port-target">书房网口 ②</span>
+      </div>
+      <div class="port-item" style="border-color: #8b5cf6;">
+        <span class="port-label v20">P⑬</span>
+        <span class="port-target">中枢网关② <span class="sub">(弱电箱旁公共区域·3D打印PoE支架贴墙·PoE供电)</span></span>
+      </div>
+      <div class="port-item" style="opacity:0.4">
+        <span class="port-label free">P⑭⑮⑯</span>
+        <span class="port-target">空闲备用 ×3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2F 中枢网关 -->
+  <div class="nvr-box" style="border-color: #8b5cf6; background: #1a0f2e;">
+    <div class="name" style="color: #a78bfa;">📡 2F 弱电箱旁 · 中枢网关②</div>
+    <div class="detail">
+      中枢网关②：小米 ZSWG01CM · 位置：弱电箱旁公共区域（楼层正中间，蓝牙Mesh 2.0覆盖最佳）<br>
+      安装方式：3D打印PoE支架贴墙(¥34) · PoE分离器转DC供电 · 短网线从弱电箱穿出<br>
+      覆盖范围：衣帽间→主卧→书房→弱电箱→过道→小孩房×2，总长22m，蓝牙Mesh 2.0每设备中继
+    </div>
+  </div>
+
+  <!-- 书房 NVR -->
+  <div class="nvr-box">
+    <div class="name">📹 书房 · NVR + 显示器</div>
+    <div class="detail">
+      DS-7808N-Q1（无PoE）· VLAN 40 · ← 书房网线① ← 2F交换机 → 显示器<br>
+      硬盘：<span>翻新 4TB 监控盘</span> · 摄像头与NVR同VLAN，完全隔离
+    </div>
+  </div>
+</div>
+
+<!-- 防火墙规则 -->
+<div class="fw-section">
+  <h2>🔒 防火墙规则</h2>
+  <div class="fw-grid">
+    <div class="fw-item">
+      <span class="fw-icon">✅</span>
+      <div class="fw-text">
+        <strong>V20 可信 → 全部</strong><br>
+        手机/电脑可控制智能家居、查看摄像头、管理网络
+      </div>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">✅</span>
+      <div class="fw-text">
+        <strong>中枢网关 IP → V30</strong><br>
+        <span class="note">单独放行 mDNS 中继</span>，允许发现和控制 WiFi IoT 设备
+      </div>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">❌</span>
+      <div class="fw-text">
+        <strong>V30 IoT → V20/40</strong><br>
+        IoT 设备不能访问可信网络和摄像头，只能上网 + 同 VLAN
+      </div>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">❌</span>
+      <div class="fw-text">
+        <strong>V40 监控 → 外网</strong><br>
+        摄像头 <strong>禁止访问外网</strong>，仅与 NVR 同 VLAN 互通
+      </div>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">❌</span>
+      <div class="fw-text">
+        <strong>V50 访客 → 全部内网</strong><br>
+        访客只能上网，不能访问任何内网设备
+      </div>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">🏠</span>
+      <div class="fw-text">
+        <strong>断网可用</strong><br>
+        中枢网关×2 本地控制蓝牙Mesh 2.0设备，不受外网影响
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 费用汇总 -->
+<div class="summary">
+  <h2>💰 安防费用汇总</h2>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <div class="label">摄像头 ×4</div>
+      <div class="value">DS-2CD1245-LA · ¥195 × 4 = ¥780</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">NVR 录像机</div>
+      <div class="value">DS-7808N-Q1（无PoE）· ¥395</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">监控硬盘</div>
+      <div class="value">翻新 4TB · ¥750</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">2F 交换机（升级）</div>
+      <div class="value">RG-ES218GC-P 16口千兆PoE + 2SFP光口 · ¥1,196</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">1F 小交换机</div>
+      <div class="value">TP-LINK TL-SG1005D 5口千兆 · ¥89</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">旁路由</div>
+      <div class="value">GL.iNET MT3000 · ¥499</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">2F 中枢网关配件</div>
+      <div class="value">3D打印PoE支架(贴墙) · ¥34</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">1F 交换机</div>
+      <div class="value green">不需要 ✅</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">NVR PoE 口</div>
+      <div class="value green">不需要（省 ¥87）✅</div>
+    </div>
+    <div class="summary-item" style="grid-column: span 2;">
+      <div class="label">安防总计（不含交换机）</div>
+      <div class="value price">¥1,925</div>
+    </div>
+    <div class="summary-item" style="grid-column: span 2;">
+      <div class="label">额外配件合计</div>
+      <div class="value price">¥622（小交换机 ¥89 + 旁路由 ¥499 + PoE支架 ¥34）</div>
+    </div>
+  </div>
+</div>
+
+<!-- 智能家居设备清单 -->
+<div class="summary" style="margin-top: 20px;">
+  <h2>🏠 智能家居设备清单 · 领普 E3 Pro + 平头熊 + 米家</h2>
+
+  <!-- 1F 智能设备 -->
+  <h3 style="font-size: 14px; color: #60a5fa; margin: 16px 0 8px;">一楼 (1F)</h3>
+  <table class="vlan-table">
+    <thead>
+      <tr><th>房间</th><th>面积</th><th>智能开关 (领普 E3 Pro)</th><th>窗帘电机 (平头熊)</th><th>音箱</th><th>其他</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>玄关</strong></td><td>10.5㎡</td>
+        <td>E3 Pro <strong>4键</strong> ×1 ¥70<br><span style="color:#64748b">玄关灯+过厅灯+<span style="color:#fbbf24">离家模式</span>+全关/回家</span></td>
+        <td>—</td><td>—</td>
+        <td>人体传感器 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>客厅</strong></td><td>26.8㎡</td>
+        <td>E3 Pro <strong>4键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+氛围灯+阳台灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×1<br><span style="color:#64748b">南落地窗</span></td>
+        <td>小爱音箱Pro ×1<br><span style="color:#64748b">红外遥控电视/空调</span></td>
+        <td>智能插座 ×2</td>
+      </tr>
+      <tr>
+        <td><strong>餐厅</strong></td><td>12.8㎡</td>
+        <td>E3 Pro <strong>3键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+餐边灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×1<br><span style="color:#64748b">南窗</span></td>
+        <td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>厨房</strong></td><td>9.7㎡</td>
+        <td>E3 Pro 单键 ×1 ¥50<br><span style="color:#64748b">主灯</span></td>
+        <td>—</td><td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>公卫</strong></td><td>3.9㎡</td>
+        <td>E3 Pro 2键 ×1 ¥60<br><span style="color:#64748b">主灯+排风扇</span></td>
+        <td>—</td><td>—</td>
+        <td>人体传感器 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>麻将室</strong></td><td>10.8㎡</td>
+        <td>E3 Pro <strong>4键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+灯2+<span style="color:#fbbf24">窗帘</span>+场景</span></td>
+        <td>平头熊 ×2<br><span style="color:#64748b">北窗+西窗</span></td>
+        <td>—</td>
+        <td>智能插座 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>卧室1（客房）</strong></td><td>11.6㎡</td>
+        <td>E3 Pro 单键 ×1 ¥50<br><span style="color:#64748b">主灯（吸顶灯）</span></td>
+        <td>窗帘盒已预留电源<br><span style="color:#64748b">电机后续可加</span></td>
+        <td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>卧室2（长辈房）</strong></td><td>12.9㎡</td>
+        <td>E3 Pro 2键 ×1 ¥60<br><span style="color:#64748b">主灯+床头灯</span></td>
+        <td>—</td><td>—</td>
+        <td>智能插座 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>卧室2 内卫</strong></td><td>—</td>
+        <td>E3 Pro 2键 ×1 ¥60<br><span style="color:#64748b">主灯+排风扇</span></td>
+        <td>—</td><td>—</td><td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 2F 智能设备 -->
+  <h3 style="font-size: 14px; color: #34d399; margin: 16px 0 8px;">二楼 (2F)</h3>
+  <table class="vlan-table">
+    <thead>
+      <tr><th>房间</th><th>面积</th><th>智能开关 (领普 E3 Pro)</th><th>窗帘电机 (平头熊)</th><th>音箱</th><th>其他</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>起居室</strong></td><td>8.6㎡</td>
+        <td>E3 Pro 2键 ×1 ¥60<br><span style="color:#64748b">主灯+氛围灯</span></td>
+        <td>—</td>
+        <td>小爱音箱 ×1<br><span style="color:#64748b">标准版</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>主卧</strong></td><td>12.7㎡</td>
+        <td>E3 Pro <strong>4键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+床头灯+夜灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×1<br><span style="color:#64748b">南落地窗(建议双轨)</span></td>
+        <td>小爱音箱 闹钟版 ×1</td>
+        <td>智能插座 ×2</td>
+      </tr>
+      <tr>
+        <td><strong>衣帽间</strong></td><td>8.2㎡</td>
+        <td>E3 Pro 单键 ×1 ¥50<br><span style="color:#64748b">主灯</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>人体传感器 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>主卫</strong></td><td>7.7㎡</td>
+        <td>E3 Pro <strong>3键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+镜前灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×1<br><span style="color:#64748b">卫生间窗</span></td>
+        <td>—</td><td>—</td>
+      </tr>
+      <tr>
+        <td><strong>书房</strong></td><td>6.9㎡</td>
+        <td>E3 Pro 2键 ×1 ¥60<br><span style="color:#64748b">主灯+台灯</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td>智能插座 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>小孩房1</strong></td><td>11.3㎡</td>
+        <td>E3 Pro <strong>3键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+床头灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×1<br><span style="color:#64748b">北窗</span></td>
+        <td>—</td>
+        <td>智能插座 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>小孩房2</strong></td><td>17.3㎡</td>
+        <td>E3 Pro <strong>3键</strong> ×1 ¥70<br><span style="color:#64748b">主灯+床头灯+<span style="color:#fbbf24">窗帘</span></span></td>
+        <td>平头熊 ×2<br><span style="color:#64748b">南飘窗+西窗</span></td>
+        <td>—</td>
+        <td>智能插座 ×1</td>
+      </tr>
+      <tr>
+        <td><strong>公卫</strong></td><td>3.7㎡</td>
+        <td>E3 Pro 单键 ×1 ¥50<br><span style="color:#64748b">主灯</span></td>
+        <td>—</td><td>—</td><td>人体传感器 ×1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 设备汇总 -->
+  <h3 style="font-size: 14px; color: #f8fafc; margin: 16px 0 8px;">设备数量汇总</h3>
+  <div class="summary-grid" style="margin-bottom: 16px;">
+    <div class="summary-item">
+      <div class="label">智能开关 · 领普 E3 Pro</div>
+      <div class="value">单键×4(¥50) + 2键×5(¥60) + 3键×4(¥70) + 4键×4(¥70) = <strong>17个</strong></div>
+      <div class="value price" style="margin-top: 2px;">¥1,060</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">窗帘电机 · 平头熊（已确认位置）</div>
+      <div class="value">1F: 客厅+餐厅+麻将室(2窗) = 4个<br>2F: 主卧+主卫+小孩房×2 = 3-4个</div>
+      <div class="value" style="margin-top: 2px;">共 7-8 个 · 已有 4 个 · 补购 3-4 个 ~¥450-800</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">小爱音箱</div>
+      <div class="value">Pro×1(¥250) + 闹钟版×1(¥150) + 标准版×1(¥100)</div>
+      <div class="value price" style="margin-top: 2px;">¥500</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">中枢网关</div>
+      <div class="value">小米 ZSWG01CM ×2</div>
+      <div class="value price" style="margin-top: 2px;">¥500</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">智能插座 · 米家</div>
+      <div class="value">蓝牙Mesh版 ×7</div>
+      <div class="value price" style="margin-top: 2px;">¥315</div>
+    </div>
+    <div class="summary-item">
+      <div class="label">人体传感器</div>
+      <div class="value">×5（玄关+客厅+公卫×2+衣帽间）</div>
+      <div class="value price" style="margin-top: 2px;">¥150</div>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-item" style="border: 2px solid #10b981;">
+      <div class="label">首批必装（不含窗帘电机补购）</div>
+      <div class="value price" style="font-size: 18px;">¥2,525</div>
+      <div class="value" style="color: #64748b; margin-top: 2px;">开关¥1,060 + 网关¥500 + 音箱¥500 + 插座¥315 + 传感器¥150</div>
+    </div>
+    <div class="summary-item" style="border: 2px solid #f59e0b;">
+      <div class="label">窗帘电机补购（分期加）</div>
+      <div class="value price" style="font-size: 18px;">¥450-800</div>
+      <div class="value" style="color: #64748b; margin-top: 2px;">已有4个 + 补购3-4个（已确认位置）</div>
+    </div>
+    <div class="summary-item" style="border: 2px solid #f8fafc;">
+      <div class="label">智能家居全部到位</div>
+      <div class="value price" style="font-size: 18px;">¥2,975-3,325</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; background: #0f172a; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #64748b; border: 1px solid #334155;">
+    <strong style="color: #94a3b8;">⚠️ 施工提醒：</strong>
+    ① 所有开关底盒必须拉<strong style="color: #fbbf24;">零线</strong>（零火线开关更稳定）；
+    ② 窗帘盒预留 <strong style="color: #fbbf24;">220V 插座</strong>（即使暂不装电机）；
+    ③ 领普 E3 Pro 和平头熊均支持蓝牙 Mesh 2.0，通过中枢网关本地控制，断网可用；
+    ④ 中枢网关①放1F客厅电视背面，中枢网关②放2F弱电箱旁公共区域（3D打印PoE支架贴墙）。
+  </div>
+</div>
+
+</body>
+</html>
